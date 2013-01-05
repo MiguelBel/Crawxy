@@ -1,0 +1,4 @@
+Mysql used commands
+-----------------------
+create database crawxy;
+create table proxies (id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, ip CHAR(30) NOT NULL, port CHAR(5) NOT NULL, last_time BIGINT NOT NULL, created_time BIGINT NOT NULL, status INT NOT NULL);
