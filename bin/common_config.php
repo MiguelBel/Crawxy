@@ -6,6 +6,9 @@
 	require_once('test_proxies.php');
 	require_once('database.php');
 
+	//Include crawler files
+	include('crawler/freeproxyCH.php');
+
 	//Init database class
 	$database = new Database();
 ?>

@@ -16,6 +16,7 @@
 			$db['password'] = '12345678';
 
 			$this->pdo = new PDO('mysql:host='. $db['host'] .';dbname=' . $db['db_name'], $db['user'], $db['password']);
+			$this->pdo->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
 		}
 
 		public function issetProxy($ip, $port){
@@ -43,6 +44,29 @@
 			}
 
 			return false;
+		}
+
+		public function getProxiesByStatus($status, $number){
+			if($status == '-1'){
+				$status = '0 OR status=1 OR status=2 OR status=3';
+			}
+
+			$query[0] = $this->pdo->query("SELECT * FROM proxies WHERE status=$status LIMIT $number");
+			$results = $query[0]->fetchAll(PDO::FETCH_ASSOC);
+			return $results;			
+		}
+
+		public function updateMassProxies($status, $number){
+			foreach($this->getProxiesByStatus($status, $number) as $k => $v){
+				$test = new Test($v['ip'], $v['port']);
+				$test->updateProxy();
+			}
+		}
+
+		public function getActiveProxies($number){
+			$query[0] = $this->pdo->query("SELECT * FROM proxies WHERE status=1  ORDER BY RAND() LIMIT $number");
+			$results = $query[0]->fetchAll(PDO::FETCH_ASSOC);
+			return $results;
 		}
 
 	}
