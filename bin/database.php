@@ -51,12 +51,17 @@
 				$status = '0 OR status=1 OR status=2 OR status=3';
 			}
 
+			if($number == '-1'){
+				$number = 999999999;
+			}
+			
 			$query[0] = $this->pdo->query("SELECT * FROM proxies WHERE status=$status LIMIT $number");
 			$results = $query[0]->fetchAll(PDO::FETCH_ASSOC);
 			return $results;			
 		}
 
 		public function updateMassProxies($status, $number){
+
 			foreach($this->getProxiesByStatus($status, $number) as $k => $v){
 				$test = new Test($v['ip'], $v['port']);
 				$test->updateProxy();
