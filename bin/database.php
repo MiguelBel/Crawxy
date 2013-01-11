@@ -48,7 +48,7 @@
 
 		public function getProxiesByStatus($status, $number){
 			if($status == '-1'){
-				$status = '0 OR status=1 OR status=2 OR status=3';
+				$status = '0 OR status=1 OR status=2';
 			}
 
 			if($number == '-1'){
